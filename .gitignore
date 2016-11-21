@@ -93,3 +93,7 @@ ENV/
 
 # Django
 *migrations/
+*.sqlite3
+
+# Other
+*.DS_Store

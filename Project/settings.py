@@ -119,4 +119,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+MEDIA_ROOT = '/vagrant/rekisteri/static/media'
+MEDIA_URL = '/static/media/'
+
+
+STATIC_ROOT = '/vagrant/rekisteri/static/'
 STATIC_URL = '/static/'

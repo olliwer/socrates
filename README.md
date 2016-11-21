@@ -5,3 +5,5 @@ Simple Django project template
 - Python3.4
 - Django REST Framework
 - Vagrant
+- Twitter Bootstrap 3
+- Fonts Awesome
