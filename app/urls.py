@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from app.views import *
+from app.views_api import *
 
 urlpatterns = [
 
@@ -12,4 +13,6 @@ urlpatterns = [
     # Index
     url(r'^$', IndexView.as_view(), name='index'),
 
+    # API Requests
+    url(r'^api-request/$', APIRequestView.as_view(), name='api_request'),
 ]
