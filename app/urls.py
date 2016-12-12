@@ -10,9 +10,10 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 
-    # Index
+    # Client
     url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^private/$', PrivateView.as_view(), name='private'),
 
-    # API Requests
+    # API
     url(r'^api-request/$', APIRequestView.as_view(), name='api_request'),
 ]
