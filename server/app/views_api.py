@@ -1,5 +1,6 @@
 from app.models import *
 from app.serializers import *
+from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -8,6 +9,15 @@ from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
 
+class Users(APIView):
+    """
+    List all users.
+    """
+    parser_classes = (JSONParser,) # Content-Type: application/json
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 class Pictures(APIView):
     """

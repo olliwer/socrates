@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^api/pictures/$', Pictures.as_view(), name='pictures'),
     url(r'^api/votes/$', Votes.as_view(), name='votes'),
     url(r'^api/orders/$', Orders.as_view(), name='orders'),
+    url(r'^api/users/$', Users.as_view(), name='users'),
 ]
