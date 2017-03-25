@@ -25,3 +25,37 @@ class Pictures(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Votes(APIView):
+    """
+    List all votes or create a new vote.
+    """
+    parser_classes = (JSONParser, ) # Content-Type: application/json
+    def get(self, request, format=None):
+        votes = Vote.objects.all()
+        serializer = VoteSerializer(votes, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = VoteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Orders(APIView):
+    """
+    List all orders or create a new order.
+    """
+    parser_classes = (JSONParser, ) # Content-Type: application/json
+    def get(self, request, format=None):
+        orders = Order.objects.all()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
