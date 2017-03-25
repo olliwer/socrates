@@ -5,13 +5,20 @@ body {
 }
 
 .purchaseContainer {
+  float: left;
+  margin: 0 auto;
   width: 30%;
+}
+
+.purchaseContainer h1 {
+  font-family: "AileronLight", sans-serif;
+  font-size: 70px;
 }
 
 .purchaseRow {
   text-align: left;
   padding-top: 25px;
-  font-family: Gotham;
+  font-family: "AileronBold";
   font-size: 16px;
 }
 
@@ -19,11 +26,21 @@ body {
   padding-left: 25px;
 }
 
+.largePicture {
+  right: 0px;
+  width: 60%;
+}
+
 .pictureRow {
   right: 0px;
   position: absolute;
   height: 200px;
   width: 50%;
+}
+
+.largePicture img {
+  width: 500px;
+  height: 500px;
 }
 
 .thumbnail {
@@ -39,4 +56,25 @@ body {
 
 ul {
 	  list-style-type: none;
+}
+@font-face {
+    font-family: AileronBold;
+    src: url("../public/fonts/aileron/Aileron-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: AileronBlack;
+    src: url("../public/fonts/aileron/Aileron-Black.otf") format("opentype");
+}
+
+@font-face {
+    font-family: AileronLight;
+    font-weight: bold;
+    src: url("../public/fonts/aileron/Aileron-Light.otf") format("opentype");
+}
+
+@font-face {
+    font-family: AileronItalic;
+    font-weight: bold;
+    src: url("../public/fonts/aileron/Aileron-SemiBoldItalic.otf") format("opentype");
 }
