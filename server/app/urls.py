@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^private/$', PrivateView.as_view(), name='private'),
 
     # API
-    url(r'^api-request/$', APIRequestView.as_view(), name='api_request'),
+    url(r'^api/pictures/$', Pictures.as_view(), name='pictures'),
 ]
