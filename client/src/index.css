@@ -3,3 +3,40 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.purchaseContainer {
+  width: 30%;
+}
+
+.purchaseRow {
+  text-align: left;
+  padding-top: 25px;
+  font-family: Gotham;
+  font-size: 16px;
+}
+
+.purchaseRow label {
+  padding-left: 25px;
+}
+
+.pictureRow {
+  right: 0px;
+  position: absolute;
+  height: 200px;
+  width: 50%;
+}
+
+.thumbnail {
+  width: 20%;
+  float: left;
+}
+
+.thumbnail img {
+  border:1px solid #021a40;
+  width: 150px;
+  height: 150px;
+}
+
+ul {
+	  list-style-type: none;
+}
