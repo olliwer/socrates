@@ -12,12 +12,14 @@ export default class Login extends React.Component {
   }
   render() {
     return (
+      <div>
       <GoogleLogin
         clientId="186360596290-4cnh2lg5icu20cg6v37g1558r2ds3ve0.apps.googleusercontent.com"
         buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
       />
+      </div>
     );
   }
 }
