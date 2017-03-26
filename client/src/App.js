@@ -22,7 +22,10 @@ const initialState = {
     path: '',
     owner: ''
   },
-  smallPictures: []
+  smallPictures: {
+    loading: true,
+    pictures: []
+  }
 };
 
 class App extends Component {
