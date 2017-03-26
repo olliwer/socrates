@@ -1,5 +1,7 @@
 from app.models import *
 from app.serializers import *
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -7,7 +9,42 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
+import requests
 
+class Authenticate(APIView):
+    def post(self, request, format=None):
+        serializer = AuthenticationSerializer(data=request.data)
+        if serializer.is_valid():
+            token = request.data.get("access_token")
+            # validate given token from google
+            uri = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + token
+            response = requests.get(uri)
+            if (response.json().get("email") == request.data.get("email") and response.json().get("user_id") == request.data.get("google_id")):
+                username = response.json().get("user_id")
+                user, created = User.objects.get_or_create(username=username)
+                if created:
+                    user.first_name = request.data.get("first_name")
+                    user.last_name = request.data.get("last_name")
+                    user.email = request.data.get("email")
+                    password = User.objects.make_random_password()
+                    user.set_password(password)
+                    user.save()
+                # sign the user in
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, user)
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Users(APIView):
+    """
+    List all users.
+    """
+    parser_classes = (JSONParser,) # Content-Type: application/json
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 class Pictures(APIView):
     """
