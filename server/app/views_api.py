@@ -5,13 +5,17 @@ from django.contrib.auth import login
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework import status
 import requests
 
 class Authenticate(APIView):
+    """
+    Register user (if not registered already) and return user information.
+    """
     def post(self, request, format=None):
         serializer = AuthenticationSerializer(data=request.data)
         if serializer.is_valid():
@@ -29,10 +33,14 @@ class Authenticate(APIView):
                     password = User.objects.make_random_password()
                     user.set_password(password)
                     user.save()
-                # sign the user in
-                user.backend = 'django.contrib.auth.backends.ModelBackend'
-                login(request, user)
-            return Response(status=status.HTTP_200_OK)
+            token = Token.objects.get(user=user)
+            response_data = {
+                "token": token.key,
+                "firstName": user.first_name,
+                "lastName": user.last_name,
+                "email": user.email
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -40,6 +48,8 @@ class Users(APIView):
     """
     List all users.
     """
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated, IsAdminUser,)
     parser_classes = (JSONParser,) # Content-Type: application/json
     def get(self, request, format=None):
         users = User.objects.all()
