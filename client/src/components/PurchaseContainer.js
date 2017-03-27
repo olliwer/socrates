@@ -5,7 +5,8 @@ export default class PurchaseContainer extends React.Component {
   render() {
     return (
       <div className="purchaseContainer">
-      	<h1>Get new art every day</h1>
+      	<h1>GET NEW ART EVERY DAY</h1>
+      	<hr></hr>
       	<ul>
         	<li><PurchaseSelector label="Name"/></li>
       		<li><PurchaseSelector label="Address"/></li>

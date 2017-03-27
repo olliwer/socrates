@@ -11,8 +11,18 @@ body {
 }
 
 .purchaseContainer h1 {
-  font-family: "AileronLight", sans-serif;
-  font-size: 70px;
+  text-align: left;
+  font-family: Oswald,Helvetica,sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #A7A7A7;
+  letter-spacing: 1px
+}
+
+.purchaseContainer hr {
+  text-align:left; 
+  margin: 0;
+  width: 30%;
 }
 
 .purchaseRow {
@@ -24,6 +34,12 @@ body {
 
 .purchaseRow label {
   padding-left: 25px;
+  text-align: left;
+  font-family: Oswald,Helvetica,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #A7A7A7;
+  letter-spacing: 1px
 }
 
 .largePicture {
