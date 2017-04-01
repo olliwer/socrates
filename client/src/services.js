@@ -16,10 +16,13 @@ export async function authenticateService(oauth2Response) {
 }
 
 export async function largePictureService() {
-  // simulate an asynchronous operation
-  return new Promise((res) => setTimeout(res, 1000)).then(() => {
-    return {name: 'Anttila', 'path': 'http://127.0.0.1:9000/static/media/uploads/anttila.png', owner: 'Veikko Kovanen'};
-  });
+  return fetch('http://127.0.0.1:9000/api/pictures/winner/', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  }).then((response) => response.json());
 }
 
 export async function smallPictureService(page) {

@@ -9,7 +9,7 @@ export default class LargePicture extends React.Component {
           <p>Loading...</p>
         }
         {!this.props.picture.loading &&
-          <img alt={this.props.picture.name} src={this.props.picture.path}/>
+          <img alt={this.props.picture.name} src={"http://127.0.0.1:9000" + this.props.picture.path}/>
         }
       </div>
     );
