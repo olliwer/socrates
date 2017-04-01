@@ -1,6 +1,6 @@
 from app.models import *
 from app.serializers import *
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import Http404
