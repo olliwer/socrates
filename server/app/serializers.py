@@ -38,6 +38,23 @@ class VoteSerializer(serializers.ModelSerializer):
         model = Vote
         fields = ('picture', 'user', 'time')
 
+    def create(self, validated_data):
+        vote = Vote(
+            value=validated_data['value'],
+            picture=validated_data['picture'],
+            user=validated_data['user'],
+            time=validated_data['time']
+        )
+        vote.save()
+        updatePictureScore(vote.picture, value)
+        return vote    
+
+    def updatePictureScore(picture, value):
+        picture = Picture.objects.get(pk=picture)
+        picture.score += value
+        picture.save()
+        return
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
