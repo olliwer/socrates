@@ -1,3 +1,14 @@
+export async function checkAuthenticationService() {
+  /* returns user object or message if not authenticated */
+  return fetch('http://127.0.0.1:9000/api/authenticate/', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  }).then((response) => response.json());
+}
+
 export async function authenticateService(oauth2Response) {
   return fetch('http://127.0.0.1:9000/api/authenticate/', {
     method: 'POST',

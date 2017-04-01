@@ -1,4 +1,5 @@
 from app.models import *
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -15,9 +16,7 @@ class AuthenticationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password', 'first_name', 'last_name', 'email', 'last_login', 'date_joined')
-        write_only_fields = ('password',)
-        read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'last_login', 'date_joined')
 
     def create(self, validated_data):
         user = User(
@@ -27,6 +26,18 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class TokenSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    class Meta:
+        model = Token
+        fields = ('key', 'user')
+        read_only_fields = ('user',)
+
+    def get_user(self, token):
+        user = token.user
+        serializer = UserSerializer(instance=user)
+        return serializer.data
 
 class PictureSerializer(serializers.ModelSerializer):
     class Meta:

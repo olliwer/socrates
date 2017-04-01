@@ -5,13 +5,18 @@ import LargePicture from './components/LargePicture'
 import PictureRow from './components/PictureRow'
 import Footer from './components/Footer'
 import Login from './components/Login'
-import {authenticateService, largePictureService, smallPictureService} from './services';
+import {
+  checkAuthenticationService,
+  authenticateService,
+  largePictureService,
+  smallPictureService
+} from './services';
 
 const initialState = {
   loading: true,
   user: {
     isAuthenticated: false,
-    loading: false,
+    loading: true,
     authToken: '',
     firstName: '',
     lastName: '',
@@ -34,7 +39,21 @@ class App extends Component {
     super(props);
     this.state = initialState;
 
-    // load the large picture from server
+    checkAuthenticationService().then((response) => {
+      let user = this.state.user;
+      if (response.key) {
+        user.isAuthenticated = true
+        user.loading = false
+        user.authToken = response.key
+        user.firstName = response.user.first_name
+        user.lastName = response.user.last_name
+        user.email = response.user.email
+      } else {
+        user.loading = false
+      }
+      this.setState({user: user});
+    });
+
     largePictureService().then((response) => {
       const largePicture = {...response, loading: false};
       this.setState({largePicture: largePicture});
@@ -45,6 +64,7 @@ class App extends Component {
       smallPictures.pictures = response;
       this.setState({smallPictures: smallPictures});
     });
+
   }
 
   authenticate = (oauth2Response) => {
@@ -73,7 +93,7 @@ class App extends Component {
           pic.score += score
        }
        return pic
-    }));   
+    }));
   }
 
   render() {

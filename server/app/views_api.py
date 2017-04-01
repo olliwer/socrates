@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import Http404
+from django.contrib.sessions.backends.db import SessionStore
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -13,10 +14,22 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 import requests
 
+session_store = SessionStore()
+
 class Authenticate(APIView):
     """
-    Register user (if not registered already) and return user information.
+    Get authentication token, or
+    register user (if not registered already) and return user information.
     """
+    parser_classes = (JSONParser,)
+    def get(self, request, format=None):
+        key = session_store.get('token', False)
+        if not key:
+            return Response({"message": "Credentials not given"})
+        token = Token.objects.get(key=key)
+        serializer = TokenSerializer(token)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = AuthenticationSerializer(data=request.data)
         if serializer.is_valid():
@@ -41,6 +54,9 @@ class Authenticate(APIView):
                 "lastName": user.last_name,
                 "email": user.email
             }
+            # store token key to session table
+            session_store['token'] = token.key
+            session_store.save()
             return Response(response_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
