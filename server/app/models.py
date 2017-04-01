@@ -18,8 +18,13 @@ class Picture(models.Model):
     path = models.FileField(upload_to='uploads')
     owner = models.ForeignKey(User)
     uploaded = models.DateTimeField(default=timezone.now)
+    votes = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ('votes',)
 
 class Vote(models.Model):
+    value = models.IntegerField()
     picture = models.ForeignKey(Picture)
     user = models.ForeignKey(User)
     time = models.DateTimeField(default=timezone.now)
