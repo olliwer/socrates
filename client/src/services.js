@@ -36,7 +36,7 @@ export async function smallPictureService(page) {
 }
 
 export async function voteService(vote) {
-  return fetch('http://127.0.0.1:9000/api/votes', {
+  return fetch('http://127.0.0.1:9000/api/votes/', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -49,4 +49,3 @@ export async function voteService(vote) {
     })
   }).then((response) => response.json());
 }
-

@@ -31,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Picture
-        fields = ('name', 'path', 'owner', 'uploaded', 'score', 'winner')
+        fields = ('id', 'name', 'path', 'owner', 'uploaded', 'score', 'winner')
 
 class VoteSerializer(serializers.ModelSerializer):
     #token = serializers.ReadOnlyField(source='token')

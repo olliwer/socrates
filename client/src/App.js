@@ -72,7 +72,7 @@ class App extends Component {
         <Login authenticate={this.authenticate} user={this.state.user}/>
         <PurchaseContainer/>
         <LargePicture picture={this.state.largePicture}/>
-        <PictureRow pictures={this.state.smallPictures.pictures}/>
+        <PictureRow pictures={this.state.smallPictures.pictures} token={this.state.user.authToken}/>
         <Footer/>
       </div>
     );
