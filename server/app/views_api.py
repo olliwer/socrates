@@ -63,7 +63,7 @@ class Pictures(APIView):
     """
     parser_classes = (JSONParser, FileUploadParser) # Content-Type: application/json
     def get(self, request, format=None):
-        page = request.GET.get('page') if (request.GET.get('page') != None) else 1 
+        page = request.GET.get('page') if (request.GET.get('page') != None) else 1
         picture_list = Picture.objects.all()
         paginator = Paginator(picture_list, 5)
         pictures = paginator.page(page)
@@ -82,12 +82,12 @@ class Pictures(APIView):
 """  /pictures/winner  """
 class Winner(APIView):
     """
-    List all pictures or create a new picture.
+    Get the latest winner picture.
     """
-    parser_classes = (JSONParser, FileUploadParser) # Content-Type: application/json
+    parser_classes = (JSONParser, ) # Content-Type: application/json
     def get(self, request, format=None):
-        winner = Picture.objects.filter(winner=true).orderBy("uploaded").first()
-        serializer = PictureSerializer(winner, many=True)
+        winner = Picture.objects.filter(winner=True).order_by("uploaded").first()
+        serializer = PictureSerializer(winner, many=False)
         return Response(serializer.data)
 
 class Votes(APIView):
