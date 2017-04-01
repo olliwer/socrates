@@ -34,3 +34,19 @@ export async function smallPictureService(page) {
     }
   }).then((response) => response.json());
 }
+
+export async function voteService(vote) {
+  return fetch('http://127.0.0.1:9000/api/votes', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      picture: vote.picture,
+      value: vote.value,
+      token: vote.token
+    })
+  }).then((response) => response.json());
+}
+
