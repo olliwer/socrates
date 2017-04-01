@@ -40,7 +40,7 @@ class App extends Component {
       this.setState({largePicture: largePicture});
     });
 
-    smallPictureService().then((response) => {
+    smallPictureService(1).then((response) => {
       const smallPictures = this.state.smallPictures;
       smallPictures.pictures = response;
       this.setState({smallPictures: smallPictures});

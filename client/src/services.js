@@ -22,8 +22,8 @@ export async function largePictureService() {
   });
 }
 
-export async function smallPictureService() {
-  return fetch('http://127.0.0.1:9000/api/pictures/?page=1', {
+export async function smallPictureService(page) {
+  return fetch('http://127.0.0.1:9000/api/pictures/?page=' + page, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
