@@ -20,6 +20,7 @@ class Picture(models.Model):
     uploaded = models.DateTimeField(default=timezone.now)
 
 class Vote(models.Model):
+    value = models.IntegerField()
     picture = models.ForeignKey(Picture)
     user = models.ForeignKey(User)
     time = models.DateTimeField(default=timezone.now)
