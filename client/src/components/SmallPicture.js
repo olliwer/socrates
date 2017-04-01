@@ -5,8 +5,8 @@ export default class SmallPicture extends React.Component {
 
   vote = (value) => {
   	const vote = {"value": value, "token": this.props.token, "picture": this.props.picture.id}
-
   	voteService(vote)
+  	this.props.updateScore(value, this.props.picture.id)
   }
 
   render() {

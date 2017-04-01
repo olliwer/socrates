@@ -66,13 +66,23 @@ class App extends Component {
   componentDidMount() {
     this.setState({loading: false});
   }
+
+  updateScore = (score, picture) => {
+    this.setState(this.state.smallPictures.pictures.map(function(pic) {
+       if (pic.id===picture) {
+          pic.score += score
+       }
+       return pic
+    }));   
+  }
+
   render() {
     return (
       <div className="App">
         <Login authenticate={this.authenticate} user={this.state.user}/>
         <PurchaseContainer/>
         <LargePicture picture={this.state.largePicture}/>
-        <PictureRow pictures={this.state.smallPictures.pictures} token={this.state.user.authToken}/>
+        <PictureRow pictures={this.state.smallPictures.pictures} token={this.state.user.authToken} updateScore={this.updateScore}/>
         <Footer/>
       </div>
     );
