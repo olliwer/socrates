@@ -31,26 +31,23 @@ class UserSerializer(serializers.ModelSerializer):
 class PictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Picture
-        fields = ('name', 'path', 'owner', 'uploaded')
+        fields = ('name', 'path', 'owner', 'uploaded', 'score', 'winner')
 
 class VoteSerializer(serializers.ModelSerializer):
+    #token = serializers.ReadOnlyField(source='token')
+
     class Meta:
         model = Vote
-        fields = ('picture', 'user', 'time')
+        fields = ('picture', 'value')
 
     def create(self, validated_data):
-        vote = Vote(
-            value=validated_data['value'],
-            picture=validated_data['picture'],
-            user=validated_data['user'],
-            time=validated_data['time']
-        )
-        vote.save()
-        updatePictureScore(vote.picture, value)
-        return vote    
+        vote = Vote.objects.create(**validated_data)
+        value=validated_data['value']
+        self.update_picture_score(vote.picture, value)
+        return vote
 
-    def updatePictureScore(picture, value):
-        picture = Picture.objects.get(pk=picture)
+    def update_picture_score(self, picture, value):
+        picture = Picture.objects.get(pk=picture.pk)
         picture.score += value
         picture.save()
         return
