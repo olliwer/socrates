@@ -20,6 +20,9 @@ class Picture(models.Model):
     uploaded = models.DateTimeField(default=timezone.now)
     votes = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ('votes',)
+
 class Vote(models.Model):
     value = models.IntegerField()
     picture = models.ForeignKey(Picture)
