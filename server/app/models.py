@@ -18,8 +18,8 @@ class Picture(models.Model):
     path = models.FileField(upload_to='uploads')
     owner = models.ForeignKey(User)
     uploaded = models.DateTimeField(default=timezone.now)
-    score = models.IntegerField(db_index="True", default=0)
-    winner = models.BooleanField()
+    score = models.IntegerField(db_index=True, default=0)
+    winner = models.BooleanField(default=False)
 
 class Vote(models.Model):
     value = models.IntegerField()

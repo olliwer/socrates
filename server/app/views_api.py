@@ -1,5 +1,6 @@
 from app.models import *
 from app.serializers import *
+from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import Http404
@@ -62,7 +63,11 @@ class Pictures(APIView):
     """
     parser_classes = (JSONParser, FileUploadParser) # Content-Type: application/json
     def get(self, request, format=None):
-        pictures = Picture.objects.all()
+        page = request.GET.get('page') if (request.GET.get('page') != None) else 1 
+        picture_list = Picture.objects.all()
+        paginator = Paginator(picture_list, 5)
+        pictures = paginator.page(page)
+
         serializer = PictureSerializer(pictures, many=True)
         return Response(serializer.data)
 
