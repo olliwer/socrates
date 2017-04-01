@@ -73,6 +73,18 @@ class Pictures(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+"""  /pictures/winner  """
+class Winner(APIView):
+    """
+    List all pictures or create a new picture.
+    """
+    parser_classes = (JSONParser, FileUploadParser) # Content-Type: application/json
+    def get(self, request, format=None):
+        winner = Picture.objects.filter(winner=true).orderBy("uploaded").first()
+        serializer = PictureSerializer(winner, many=True)
+        return Response(serializer.data)
+
 class Votes(APIView):
     """
     List all votes or create a new vote.

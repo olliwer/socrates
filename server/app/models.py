@@ -19,6 +19,7 @@ class Picture(models.Model):
     owner = models.ForeignKey(User)
     uploaded = models.DateTimeField(default=timezone.now)
     score = models.IntegerField(db_index="True", default=0)
+    winner = models.BooleanField()
 
 class Vote(models.Model):
     value = models.IntegerField()
