@@ -109,7 +109,9 @@ class Votes(APIView):
     def post(self, request, format=None):
         serializer = VoteSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            token = request.data.get("token")
+            user = Token.objects.get(key=token).user
+            serializer.save(user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
