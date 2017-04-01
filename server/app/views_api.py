@@ -66,7 +66,13 @@ class Pictures(APIView):
         page = request.GET.get('page') if (request.GET.get('page') != None) else 1
         picture_list = Picture.objects.all()
         paginator = Paginator(picture_list, 5)
-        pictures = paginator.page(page)
+
+        try:
+            pictures = paginator.page(page)
+        except PageNotAnInteger:
+            pictures = paginator.page(1)
+        except EmptyPage:
+            pictures = paginator.page(paginator.num_pages)
 
         serializer = PictureSerializer(pictures, many=True)
         return Response(serializer.data)
