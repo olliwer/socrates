@@ -21,3 +21,12 @@ export async function largePictureService() {
     return {name: 'Anttila', 'path': 'http://127.0.0.1:9000/static/media/uploads/anttila.png', owner: 'Veikko Kovanen'};
   });
 }
+
+export async function smallPictureService() {
+  fetch('http://127.0.0.1:9000/api/pictures?page=1', {
+    /*headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }*/
+  }).then((response) => response.json());
+}

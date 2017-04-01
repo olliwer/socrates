@@ -5,7 +5,7 @@ import LargePicture from './components/LargePicture'
 import PictureRow from './components/PictureRow'
 import Footer from './components/Footer'
 import Login from './components/Login'
-import {authenticateService, largePictureService} from './services';
+import {authenticateService, largePictureService, smallPictureService} from './services';
 
 const initialState = {
   loading: true,
@@ -38,6 +38,14 @@ class App extends Component {
     largePictureService().then((response) => {
       const largePicture = {...response, loading: false};
       this.setState({largePicture: largePicture});
+    });
+
+    smallPictureService().then((response) => {
+      const smallPictures = this.state.smallPictures;
+      smallPictures.pictures = response;
+      console.log(response);
+
+      this.setState({smallPictures: smallPictures});
     });
   }
 
