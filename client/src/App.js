@@ -43,8 +43,6 @@ class App extends Component {
     smallPictureService().then((response) => {
       const smallPictures = this.state.smallPictures;
       smallPictures.pictures = response;
-      console.log(response);
-
       this.setState({smallPictures: smallPictures});
     });
   }
@@ -74,7 +72,7 @@ class App extends Component {
         <Login authenticate={this.authenticate} user={this.state.user}/>
         <PurchaseContainer/>
         <LargePicture picture={this.state.largePicture}/>
-        <PictureRow/>
+        <PictureRow pictures={this.state.smallPictures.pictures}/>
         <Footer/>
       </div>
     );

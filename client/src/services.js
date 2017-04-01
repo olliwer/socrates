@@ -23,10 +23,11 @@ export async function largePictureService() {
 }
 
 export async function smallPictureService() {
-  fetch('http://127.0.0.1:9000/api/pictures?page=1', {
-    /*headers: {
+  return fetch('http://127.0.0.1:9000/api/pictures/?page=1', {
+    method: 'GET',
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    }*/
+    }
   }).then((response) => response.json());
 }
